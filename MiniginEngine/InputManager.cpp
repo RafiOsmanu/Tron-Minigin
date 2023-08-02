@@ -59,7 +59,7 @@ bool dae::InputManager::ProcessInput()
 	for (const auto& comm : KeyboardCommands)
 	{
 		//update command
-		comm.second->Update();
+		//comm.second->Update();
 
 		auto button = comm.first.first;
 		switch (comm.first.second)

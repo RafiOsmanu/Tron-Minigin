@@ -27,11 +27,16 @@ namespace dae
 
 		void SetTexture(const std::string& filename);
 
+		std::string GetTexture() const;
+
+		void SetAngle(float angle) { m_Angle = angle; }
+
 	protected:
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 		std::shared_ptr<Texture2D> m_texture{};
+		std::string m_TexturePath{};
 
-	
+		float m_Angle{ 0 };
 	};
 }
 

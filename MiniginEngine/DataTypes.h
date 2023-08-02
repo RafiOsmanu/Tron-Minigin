@@ -11,12 +11,20 @@ namespace dae
 		PlayerScoreAdd
 	};
 
-	enum PlayerInput
+	enum TankInput
 	{
 		Left,
 		Right, 
 		Up,
-		Down
+		Down,
+	};
+
+	enum TourretInput
+	{
+		TourretLeft,
+		TourretRight,
+		TourretUp,
+		TourretDown,
 	};
 
 	struct Cube

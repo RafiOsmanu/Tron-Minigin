@@ -14,6 +14,14 @@ namespace dae
 		{
 			component->Update();
 		}
+
+		//if (m_IsPositionDirty)
+		{
+			for (auto child : m_pChildren)
+			{
+				child.lock()->Update();
+			}
+		}
 		
 	}
 
@@ -99,7 +107,6 @@ namespace dae
 		{
 			if (m_pParent.lock() == nullptr)
 			{
-				
 				m_WorldPos = m_LocalPos;
 			}
 			else
@@ -128,7 +135,7 @@ namespace dae
 
 	void GameObject::AddChild(std::shared_ptr<GameObject> child)
 	{
-		m_pChildren.push_back(child);
+		m_pChildren.emplace_back(child);
 	}
 
 	void GameObject::SetPositionDirty()

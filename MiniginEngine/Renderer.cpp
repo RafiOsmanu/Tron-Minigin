@@ -116,4 +116,30 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
+void dae::Renderer::RenderTexture(const Texture2D& texture, float x, float y, const float rotationAngle, bool mirror) const
+{
+	SDL_Rect dst{};
+	dst.x = static_cast<int>(x);
+	dst.y = static_cast<int>(y);
+	//dst.w = static_cast<int>(width);
+	//dst.h = static_cast<int>(height);
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+
+	SDL_Point center{};
+	center.x = dst.w / 2;
+	center.y = dst.h / 2;
+
+	SDL_RendererFlip flip; // You can use SDL_FLIP_HORIZONTAL or SDL_FLIP_VERTICAL if you want to flip the texture
+	if (mirror)
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	else
+	{
+		flip = SDL_FLIP_NONE;
+	}
+
+	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, rotationAngle, &center, flip);
+}
+
 inline SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
