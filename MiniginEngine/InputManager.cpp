@@ -13,6 +13,7 @@ bool dae::InputManager::ProcessInput()
 	auto ControllerCommands = Input::GetInstance().GetControllerCommands();
 	auto KeyboardCommands = Input::GetInstance().GetKeyboardCommands();
 	auto keyboard = Input::GetInstance().GetKeyboard();
+	auto DoubleInputCommands = Input::GetInstance().GetDoubleInputCommands();
 
 	for (const auto& controller : controllers)
 	{
@@ -55,6 +56,25 @@ bool dae::InputManager::ProcessInput()
 
 	//update keyboard
 	keyboard->Update();
+
+	//check for double input
+	for (const auto& doubleComm : DoubleInputCommands)
+	{
+		auto firstButton = doubleComm.first.first.first;
+		auto secondButton = doubleComm.first.second.first;
+
+		switch (doubleComm.first.second.second)
+		{
+		case SDL_KEYDOWN:
+			if (keyboard->IsPressed(firstButton) && keyboard->IsDown(secondButton) || 
+				keyboard->IsDown(firstButton) && keyboard->IsPressed(secondButton))
+			{
+				doubleComm.second->Execute();
+				return true;
+			}
+			break;
+		}
+	}
 	
 	for (const auto& comm : KeyboardCommands)
 	{

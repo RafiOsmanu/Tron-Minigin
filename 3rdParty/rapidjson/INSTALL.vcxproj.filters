@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\rafio\OneDrive - Hogeschool West-Vlaanderen\Bureaublad\Assignment\CMakeFiles\fa4ae510bcc9a0e876faaaf8a76cbba8\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{864A42FD-CD2A-378F-B26C-2579B03CA9C8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

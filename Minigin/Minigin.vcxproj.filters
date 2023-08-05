@@ -49,6 +49,7 @@
     <ClInclude Include="TourretComponent.h">
       <Filter>BattleTank Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -86,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="TourretComponent.cpp">
       <Filter>BattleTank Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,7 +14,15 @@ namespace dae
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 	public:
-		explicit TextureComponent(std::shared_ptr<GameObject> pOwner) : m_pOwner(pOwner) {};
+		explicit TextureComponent(std::shared_ptr<GameObject> pOwner) : m_pOwner(pOwner) 
+		{
+			m_SimpleTexture = true;
+		};
+
+		explicit TextureComponent(std::shared_ptr<GameObject> pOwner, float width, float height) : m_pOwner(pOwner) , m_Width(width), m_Height(height)
+		{
+			m_SimpleTexture = false;
+		};
 		
 		TextureComponent(const TextureComponent&) = delete;
 		TextureComponent(TextureComponent&&) = delete;
@@ -37,6 +45,10 @@ namespace dae
 		std::string m_TexturePath{};
 
 		float m_Angle{ 0 };
+		float m_Width;
+		float m_Height;
+
+		bool m_SimpleTexture{ false };
 	};
 }
 

@@ -9,7 +9,15 @@ void dae::TextureComponent::Update()
 void dae::TextureComponent::Render() 
 {
 	const auto& pos = m_pOwner.lock()->GetWorldPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y, m_Angle, false);
+	
+	if (m_SimpleTexture)
+	{
+		Renderer::GetInstance().RenderTexture(*m_texture, pos.x - 8.f, pos.y - 8.f, m_Angle, false);
+	}
+	else
+	{
+		Renderer::GetInstance().RenderTexture(*m_texture, pos.x - 8.f, pos.y - 8.f, m_Width, m_Height, m_Angle, false);
+	}
 	
 }
 

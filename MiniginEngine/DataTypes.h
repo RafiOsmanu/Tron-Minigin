@@ -13,18 +13,33 @@ namespace dae
 
 	enum TankInput
 	{
-		Left,
-		Right, 
-		Up,
-		Down,
+		Left = 180,
+		Right = 0, 
+		Up = 270,
+		Down = 90,
 	};
 
 	enum TourretInput
 	{
-		TourretLeft,
-		TourretRight,
-		TourretUp,
-		TourretDown,
+		TourretLeft = 180,
+		TourretLeftUp = 225,
+		TourretLeftDown = 135,
+		TourretRight = 0,
+		TourretRightUp = 315,
+		TourretRightDown = 45,
+		TourretUp = 270,
+		TourretDown = 90,
+		TourretShoot = 1
+	};
+
+	enum InputState
+	{
+		SingleInput, WaitForDoubleInput
+	};
+
+	enum MapTerrain
+	{
+		wall, teleport, voidTile, path 
 	};
 
 	struct Cube
@@ -34,6 +49,10 @@ namespace dae
 		glm::vec3 color;     // The color of the cube
 		std::shared_ptr<Texture2D> texture;
 		bool isActive = false;
+		MapTerrain cubeType;
+
+
+
 	};
 }
 

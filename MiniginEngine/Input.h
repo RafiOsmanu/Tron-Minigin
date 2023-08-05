@@ -30,11 +30,17 @@ namespace dae
 
 		using KeyboardKey = std::pair <SDL_Scancode, SDL_EventType>;
 		using KeyboardCommandsMap = std::map<KeyboardKey, std::shared_ptr<Command>>;
+		//double input two keys pressed at the same time
+		using DoubleInput = std::pair<KeyboardKey, KeyboardKey>;
+		using DoubleInputCommandsMap = std::map<DoubleInput, std::shared_ptr<Command>>;
+
+		
 
 
 		//SET
 		void AddCommand(const ControllerKey& key, std::shared_ptr<Command> command);
 		void AddCommand(const KeyboardKey& key, std::shared_ptr<Command> command);
+		void AddCommand(const DoubleInput& doubleKey, std::shared_ptr<Command> command);
 
 		void AddController(std::shared_ptr<Gamepad> controller) { m_Controllers.push_back(controller); }
 
@@ -43,11 +49,13 @@ namespace dae
 		const KeyboardCommandsMap& GetKeyboardCommands() const { return m_KeyboardCommands; }
 		std::vector<std::shared_ptr<Gamepad>> GetControllers() const{ return m_Controllers; }
 		std::shared_ptr<Keyboard> GetKeyboard() const { return m_pKeyboard; }
+		const DoubleInputCommandsMap& GetDoubleInputCommands() const { return m_DoubleInputCommands; }
 
 	private:
 
 		ControllerCommandsMap m_ControllerCommands{};
 		KeyboardCommandsMap m_KeyboardCommands{};
+		DoubleInputCommandsMap m_DoubleInputCommands{};
 
 		std::vector<std::shared_ptr<Gamepad>> m_Controllers{};
 		std::shared_ptr<Keyboard> m_pKeyboard;

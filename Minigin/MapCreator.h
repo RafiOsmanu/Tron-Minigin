@@ -12,7 +12,7 @@ namespace dae
 		std::weak_ptr<GameObject> m_pOwner;
 	public:
 		
-		explicit MapCreator(std::shared_ptr<GameObject> pOwner, int numRows);
+		explicit MapCreator(std::shared_ptr<GameObject> pOwner);
 		~MapCreator() = default;
 		MapCreator(const MapCreator&) = delete;
 		MapCreator(MapCreator&&) = delete;
@@ -32,7 +32,6 @@ namespace dae
 
 	private:
 		//DataMembers
-		int m_NumRows;
 		std::vector<Cube> m_Cubes;
 	};
 }
