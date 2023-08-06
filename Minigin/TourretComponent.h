@@ -3,6 +3,7 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 #include "TextureComponent.h"
+#include "DataTypes.h"
 
 
 namespace dae
@@ -34,6 +35,7 @@ namespace dae
 		void SetAngle(float angle) { m_Angle = angle; }
 		void SetMirror(bool mirror) { m_Mirror = mirror; }
 		void FireTourret(float angle);
+		void SetEnvironment(std::vector<Cube>& environment) { m_Environment = environment; }
 		
 
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
@@ -47,6 +49,7 @@ namespace dae
 		float m_Width;
 		float m_Height;
 		bool m_SimpleTourret{ false };
+		std::vector<Cube> m_Environment;
 		
 	};
 }

@@ -37,7 +37,7 @@ namespace dae
 		bool IsColliding(glm::vec2 playerPos, Cube mapCube);
 		bool IsNotColliding();
 		bool m_IsPlayerDead{ false };
-		std::vector<Cube>& m_MapCubes;
+		std::vector<Cube> m_MapCubes;
 		bool m_IsColliding{ false };
 		bool m_IsNotColliding{ false };
 		glm::vec2 m_FuturePos{ 0,0 };

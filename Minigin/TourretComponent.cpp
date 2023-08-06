@@ -11,7 +11,14 @@ namespace dae
 		for (auto& bullet : m_Bullets)
 		{
 			bullet->Update(DeltaTime::GetInstance().getDeltaTime());
+			if (bullet->BulletIsDone())
+			{
+				//delete bullet from vector
+				m_Bullets.erase(std::remove(m_Bullets.begin(), m_Bullets.end(), bullet), m_Bullets.end());
+				--m_BulletCounter;
+			}
 		}
+
 	}
 
 	void TourretComponent::Render()
@@ -43,7 +50,7 @@ namespace dae
 	void TourretComponent::FireTourret(float angle)
 	{
 		m_Angle = angle;
-		m_Bullets.push_back(std::make_shared<Bullet>(m_pOwner.lock()->GetWorldPosition().x , m_pOwner.lock()->GetWorldPosition().y , m_Angle, 200.f));
+		m_Bullets.push_back(std::make_shared<Bullet>(m_pOwner.lock()->GetWorldPosition().x , m_pOwner.lock()->GetWorldPosition().y , m_Angle, 150.f, m_Environment));
 		m_Bullets[m_BulletCounter++]->Fire(angle);
 	}
 }

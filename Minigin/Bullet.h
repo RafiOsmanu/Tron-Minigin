@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include <vector>
+#include "DataTypes.h"
 
 namespace dae
 {
@@ -8,7 +10,7 @@ namespace dae
 	class Bullet
 	{
 	public:
-		Bullet(float x, float y, float angle, float speed);
+		Bullet(float x, float y, float angle, float speed, std::vector<Cube>& cubes);
 
 		~Bullet() = default;
 		Bullet(const Bullet& other) = delete;
@@ -23,6 +25,9 @@ namespace dae
 			m_Angle = angle;
 			m_IsFired = true;
 		}
+
+		bool IsColliding(Cube mapCube);
+		bool BulletIsDone() const { return m_WallBounceCounter >= 5; }
 	private:
 		float m_Speed;
 		float m_Angle;
@@ -30,6 +35,8 @@ namespace dae
 		float m_Y;
 		bool m_IsFired;
 		std::shared_ptr<Texture2D> m_texture{};
+		std::vector<Cube> m_Cubes;
+		int m_WallBounceCounter{ 0 };
 	};
 }
 
