@@ -43,7 +43,7 @@ namespace dae
 						m_Angle = -m_Angle;
 					}
 					
-					//++m_WallBounceCounter;
+					++m_WallBounceCounter;
 					break;
 				}
 
@@ -61,11 +61,11 @@ namespace dae
 	{
 		if (m_IsFired)
 		{
- 			Renderer::GetInstance().RenderTexture(*m_texture, m_X, m_Y);
+ 			Renderer::GetInstance().RenderTexture(*m_texture, m_X, m_Y, m_texture->GetSize().x / 1.5f, m_texture->GetSize().y / 1.5f);
 			
 
-			SDL_Rect rect{ int(m_X), int(m_Y), static_cast<int>(10), static_cast<int>(10) };
-			Renderer::GetInstance().DrawRect(rect);
+			//SDL_Rect rect{ int(m_X), int(m_Y), static_cast<int>(10), static_cast<int>(10) };
+			//Renderer::GetInstance().DrawRect(rect);
 		}
 	}
 
@@ -74,11 +74,13 @@ namespace dae
 		// Collision detection
 		if (mapCube.cubeType != dae::MapTerrain::wall)
 			return false;
+		auto bulletWidth = m_texture->GetSize().x / 1.2f;
+		auto bulletHeight = m_texture->GetSize().y / 1.2f;
 
 		auto cubeRight = mapCube.position.x + mapCube.size;
 		auto cubeBottom = mapCube.position.y + mapCube.size;
-		auto centerOfBullet = glm::vec2(m_X + m_texture->GetSize().x / 2.f, m_Y + m_texture->GetSize().y / 2.f);
-		float bulletRadius = std::max(m_texture->GetSize().x, m_texture->GetSize().y) / 2.f;
+		auto centerOfBullet = glm::vec2(m_X + bulletWidth / 2.f, m_Y + bulletHeight / 2.f);
+		float bulletRadius = std::max(bulletWidth, bulletHeight) / 2.f;
 
 		// Check if the bullet's bounding circle collides with the cube
 		float closestX = std::max(mapCube.position.x, std::min(centerOfBullet.x, cubeRight));

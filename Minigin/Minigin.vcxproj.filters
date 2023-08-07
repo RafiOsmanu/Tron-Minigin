@@ -40,7 +40,7 @@
     <ClInclude Include="ServiceLocator.h">
       <Filter>Game Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColissionComponent.h">
+    <ClInclude Include="CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GameStateComponent.h">
@@ -50,6 +50,10 @@
       <Filter>BattleTank Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="EnemyAiComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentsIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -79,7 +83,7 @@
     <ClCompile Include="AudioNavigator.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColissionComponent.cpp">
+    <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GameStateComponent.cpp">
@@ -90,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAiComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

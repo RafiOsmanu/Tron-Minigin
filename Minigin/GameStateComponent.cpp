@@ -2,7 +2,7 @@
 #include "ServiceLocator.h"
 #include "DeltaTime.h"
 #include "Commands.h"
-#include "ColissionComponent.h"
+#include "CollisionComponent.h"
 #include "Input.h"
 
 void dae::GameStateComponent::Update()
@@ -35,7 +35,7 @@ void dae::GameStateComponent::Update()
         }
     }
 
-    if (m_Player->GetComponent<ColissionComponent>()->IsPlayerDead())
+    if (m_Player->GetComponent<CollisionComponent>()->IsPlayerDead())
     {
         if (!m_SoundPlayed)
         {
@@ -48,7 +48,7 @@ void dae::GameStateComponent::Update()
         if (m_Timer >= m_TimeToWait)
         {
             Input::GetInstance().GetKeyboard().get()->SetDisableInput(false);
-            m_Player->GetComponent<ColissionComponent>()->SetPlayerDead(false);
+            m_Player->GetComponent<CollisionComponent>()->SetPlayerDead(false);
             m_SoundPlayed = false;
             m_Timer = 0.f;
             //Restart level

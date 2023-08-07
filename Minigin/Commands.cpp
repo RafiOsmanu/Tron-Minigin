@@ -6,7 +6,7 @@
 #include "TextureComponent.h"
 #include "Input.h"
 #include "TourretComponent.h"
-#include "ColissionComponent.h"
+#include "CollisionComponent.h"
 
 dae::MoveCommand::MoveCommand(const std::shared_ptr<GameObject> actor, float speed, TankInput input)
 	:m_Actor{actor}
@@ -36,11 +36,12 @@ void dae::MoveCommand::Execute()
 	m_Actor->GetComponent<dae::TextureComponent>()->SetAngle(m_Angle);
 	
 	auto translation = glm::vec3(m_Actor->GetLocalPosition(), 0) + (m_Direction * m_CurrentSpeed * DeltaTime::GetInstance().getDeltaTime());
-	m_Actor->GetComponent<dae::ColissionComponent>()->SetFuturePos({ translation.x, translation.y });
-	if (m_Actor->GetComponent<dae::ColissionComponent>()->IsColliding())
+	m_Actor->GetComponent<dae::CollisionComponent>()->SetFuturePos({ translation.x + 1, translation.y + 1 });
+	if (m_Actor->GetComponent<dae::CollisionComponent>()->IsColliding())
 	{
 		return;
 	}
+
 	m_Actor->SetLocalPosition({ translation.x, translation.y });
 	
 	//Engine::ServiceLocator::GetAudioSystem().Play((unsigned short)Engine::Sound::QbertJump, 10.f);
@@ -49,7 +50,7 @@ void dae::MoveCommand::Execute()
 glm::vec2 dae::MoveCommand::CalculateSlidingVector(const glm::vec2& currentPosition, const glm::vec2& potentialNewPosition)
 {
 	glm::vec2 direction = potentialNewPosition - currentPosition;
-	glm::vec2 slidingVector;
+	glm::vec2 slidingVector{};
 
 	if (direction.x > 0)
 		slidingVector.x = std::floor(potentialNewPosition.x) - currentPosition.x;

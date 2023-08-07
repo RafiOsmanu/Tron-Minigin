@@ -50,7 +50,11 @@ namespace dae
 		float m_Height;
 		bool m_SimpleTourret{ false };
 		std::vector<Cube> m_Environment;
-		
+
+		float m_FireRate{ 0.35f };
+		float m_FireTimer{ 0.f };
+		bool m_StartTimer{ false };
+		bool m_CanFire{ true };
 	};
 }
 
