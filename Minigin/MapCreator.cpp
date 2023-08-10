@@ -88,7 +88,7 @@ namespace dae
 
             case 4:
                 cube.texture = ResourceManager::GetInstance().LoadTexture("Level/path.png");
-                cube.cubeType = dae::MapTerrain::teleport;
+                cube.cubeType = dae::MapTerrain::path;
                 break;
             }
 

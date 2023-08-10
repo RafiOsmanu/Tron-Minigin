@@ -5,6 +5,7 @@
 
 void dae::EnemyAiComponent::Update()
 {
+	if(m_Isdead) return;
 	HandleMovement();
 	glm::vec2 translation{};
 	switch (m_Direction)

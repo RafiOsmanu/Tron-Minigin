@@ -17,15 +17,19 @@ dae::MoveCommand::MoveCommand(const std::shared_ptr<GameObject> actor, float spe
 	{
 	case Left:
 		m_Direction = { -1.f,0,0 };
+		m_Offset = {1, 0};
 		break;
 	case Right:
 		m_Direction = { 1.f,0,0 };
+		m_Offset = {-1, 0};
 		break;
 	case Up:
 		m_Direction = { 0,-1,0 };
+		m_Offset = {0, -1};
 		break;
 	case Down:
 		m_Direction = { 0,1,0 };
+		m_Offset = {0, 1};
 		break;
 	}
 	m_Angle = static_cast<float>(input);
@@ -36,13 +40,13 @@ void dae::MoveCommand::Execute()
 	m_Actor->GetComponent<dae::TextureComponent>()->SetAngle(m_Angle);
 	
 	auto translation = glm::vec3(m_Actor->GetLocalPosition(), 0) + (m_Direction * m_CurrentSpeed * DeltaTime::GetInstance().getDeltaTime());
-	m_Actor->GetComponent<dae::CollisionComponent>()->SetFuturePos({ translation.x + 1, translation.y + 1 });
+	m_Actor->GetComponent<dae::CollisionComponent>()->SetFuturePos({ translation.x, translation.y});
 	if (m_Actor->GetComponent<dae::CollisionComponent>()->IsColliding())
 	{
 		return;
 	}
 
-	m_Actor->SetLocalPosition({ translation.x, translation.y });
+	m_Actor->SetLocalPosition({ translation.x, translation.y});
 	
 	//Engine::ServiceLocator::GetAudioSystem().Play((unsigned short)Engine::Sound::QbertJump, 10.f);
 }

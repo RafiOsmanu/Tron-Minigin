@@ -8,6 +8,7 @@ void dae::TextureComponent::Update()
 
 void dae::TextureComponent::Render() 
 {
+	if(m_IsDead) return;
 	const auto& pos = m_pOwner.lock()->GetWorldPosition();
 	
 	if (m_SimpleTexture)

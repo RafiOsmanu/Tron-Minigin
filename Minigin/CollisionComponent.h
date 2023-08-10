@@ -14,7 +14,11 @@ namespace dae
 			m_pOwner(pOwner),
 			m_MapCubes(mapCubes)
 		{
-
+			for (auto& cube : m_MapCubes)
+			{
+				if (cube.cubeType == dae::MapTerrain::path)
+					m_PathCubes.push_back(cube);
+			}
 		}
 
 		CollisionComponent(const CollisionComponent&) = delete;
@@ -30,6 +34,7 @@ namespace dae
 		bool IsColliding() const { return m_IsColliding; }
 		bool IsNotColliding() const { return m_IsNotColliding; }
 		void SetFuturePos(glm::vec2 futurePos) { m_FuturePos = futurePos; }
+		void SetIsDead(bool isDead) { m_IsDead = isDead; }
 
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 
@@ -41,6 +46,9 @@ namespace dae
 		bool m_IsColliding{ false };
 		bool m_IsNotColliding{ false };
 		glm::vec2 m_FuturePos{ 0,0 };
+		bool m_IsDead{ false };
+
+		std::vector<Cube> m_PathCubes{};
 		
 	};
 }

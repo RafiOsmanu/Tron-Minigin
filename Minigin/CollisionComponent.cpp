@@ -8,7 +8,8 @@ namespace dae
 {
 	void CollisionComponent::Update()
 	{
-		
+		if (m_IsDead) return;
+
 		for (Cube& cube : m_MapCubes)
 		{
 			
@@ -17,6 +18,11 @@ namespace dae
 				m_IsColliding = true;
 				m_IsNotColliding = false;
 				break;
+			}
+			else if (IsColliding(m_FuturePos, cube) && (cube.cubeType == dae::MapTerrain::teleport))
+			{
+				auto randIndex = rand() % m_PathCubes.size();
+				m_pOwner.lock()->SetLocalPosition(m_PathCubes.at(randIndex).position);
 			}
 			
 			m_IsColliding = false;
@@ -28,6 +34,7 @@ namespace dae
 
 	void CollisionComponent::Render()
 	{
+		if (m_IsDead) return;
 		//nothing to render
 		SDL_Rect rect{ static_cast<int>(m_pOwner.lock().get()->GetLocalPosition().x), static_cast<int>(m_pOwner.lock().get()->GetLocalPosition().y), static_cast<int>(7), static_cast<int>(7) };
 		Renderer::GetInstance().DrawRect(rect);

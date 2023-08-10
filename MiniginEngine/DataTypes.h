@@ -2,6 +2,8 @@
 #include <glm/glm.hpp>
 #include "Texture2D.h"
 #include <memory>
+#include <map>
+#include <string>
 
 namespace dae
 {
@@ -50,9 +52,11 @@ namespace dae
 		std::shared_ptr<Texture2D> texture;
 		bool isActive = false;
 		MapTerrain cubeType;
+	};
 
-
-
+	struct EnemyData
+	{
+		std::pair<std::string, glm::vec2> enemyData;
 	};
 }
 

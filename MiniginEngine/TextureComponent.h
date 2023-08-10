@@ -39,6 +39,8 @@ namespace dae
 
 		void SetAngle(float angle) { m_Angle = angle; }
 
+		void SetIsDead(bool isDead) { m_IsDead = isDead; }
+
 	protected:
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 		std::shared_ptr<Texture2D> m_texture{};
@@ -49,6 +51,8 @@ namespace dae
 		float m_Height;
 
 		bool m_SimpleTexture{ false };
+
+		bool m_IsDead{ false };
 	};
 }
 

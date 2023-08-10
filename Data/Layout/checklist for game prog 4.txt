@@ -1,0 +1,11 @@
+make enemies tourret point in direction there moving
+enemies should release a bullet every interval
+handle collision from enemy bullets
+add score for every tank kill 
+write score to json file -> make use of observer patern
+add 2 more maps
+add start screen 
+add versus mode 
+add co-op mode 
+add sound 
+ 

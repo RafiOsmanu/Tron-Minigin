@@ -42,6 +42,8 @@ namespace dae
 						// Reflect the bullet's angle vertically
 						m_Angle = -m_Angle;
 					}
+
+					
 					
 					++m_WallBounceCounter;
 					break;
@@ -85,6 +87,27 @@ namespace dae
 		// Check if the bullet's bounding circle collides with the cube
 		float closestX = std::max(mapCube.position.x, std::min(centerOfBullet.x, cubeRight));
 		float closestY = std::max(mapCube.position.y, std::min(centerOfBullet.y, cubeBottom));
+		float distanceX = centerOfBullet.x - closestX;
+		float distanceY = centerOfBullet.y - closestY;
+		float distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+		return distanceSquared < (bulletRadius * bulletRadius);
+	}
+
+	bool Bullet::IsColliding(glm::vec2 pos, float width, float height)
+	{
+		// Collision detection
+		auto bulletWidth = m_texture->GetSize().x / 1.2f;
+		auto bulletHeight = m_texture->GetSize().y / 1.2f;
+
+		auto cubeRight = pos.x + width;
+		auto cubeBottom = pos.y + height;
+		auto centerOfBullet = glm::vec2(m_X + bulletWidth / 2.f, m_Y + bulletHeight / 2.f);
+		float bulletRadius = std::max(bulletWidth, bulletHeight) / 2.f;
+
+		// Check if the bullet's bounding circle collides with the cube
+		float closestX = std::max(pos.x, std::min(centerOfBullet.x, cubeRight));
+		float closestY = std::max(pos.y, std::min(centerOfBullet.y, cubeBottom));
 		float distanceX = centerOfBullet.x - closestX;
 		float distanceY = centerOfBullet.y - closestY;
 		float distanceSquared = distanceX * distanceX + distanceY * distanceY;

@@ -186,6 +186,7 @@
     <ClInclude Include="ComponentsIncludes.h" />
     <ClInclude Include="DeathObserver.h" />
     <ClInclude Include="EnemyAiComponent.h" />
+    <ClInclude Include="EnemyDamageComponent.h" />
     <ClInclude Include="GameStateComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="MapCreator.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="DeathObserver.cpp" />
     <ClCompile Include="EnemyAiComponent.cpp" />
+    <ClCompile Include="EnemyDamageComponent.cpp" />
     <ClCompile Include="GameStateComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="Main.cpp" />

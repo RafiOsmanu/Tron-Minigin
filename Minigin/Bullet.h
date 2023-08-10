@@ -27,6 +27,8 @@ namespace dae
 		}
 
 		bool IsColliding(Cube mapCube);
+		bool IsColliding(glm::vec2 pos, float width, float height);
+		//bool IsColliding();
 		bool BulletIsDone() const { return m_WallBounceCounter >= 5; }
 	private:
 		float m_Speed;

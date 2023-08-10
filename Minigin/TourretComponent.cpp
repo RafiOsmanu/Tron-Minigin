@@ -3,20 +3,25 @@
 #include "Renderer.h"
 #include "DeltaTime.h"
 #include "Bullet.h"
+#include "EnemyDamageComponent.h"
 
 namespace dae
 {
 	void TourretComponent::Update()
 	{
+		if (m_IsDead) return;
 		for (auto& bullet : m_Bullets)
 		{
 			if(!bullet) continue;
+
+			//check if bullet is colliding with enemy
+			HandleEnemyCollision(bullet);
 
 			bullet->Update(DeltaTime::GetInstance().getDeltaTime());
 			if (bullet->BulletIsDone())
 			{
 				//delete bullet from vector
-				m_Bullets.erase(std::remove(m_Bullets.begin(), m_Bullets.end(), bullet), m_Bullets.end());
+				DeleteBullet(bullet);
 			}
 		}
 
@@ -36,6 +41,7 @@ namespace dae
 
 	void TourretComponent::Render()
 	{
+		if (m_IsDead) return;
 		const auto& pos = m_pOwner.lock()->GetWorldPosition();
 
 		if (m_SimpleTourret)
@@ -51,6 +57,20 @@ namespace dae
 		{
 			bullet->Render();
 		}
+
+		for (auto& enemy : m_Enemys)
+		{
+			if (!enemy) return;
+			SDL_Rect rect
+			{
+			   int(enemy.get()->GetLocalPosition().x - m_EnemyCollisionSize.x * 0.35f), 
+			   int(enemy.get()->GetLocalPosition().y - m_EnemyCollisionSize.y * 0.35f),
+			   (int)m_EnemyCollisionSize.x,
+			   (int)m_EnemyCollisionSize.y
+			};
+		
+			Renderer::GetInstance().DrawRect(rect);
+		}
 	}
 
 	void TourretComponent::SetTexture(const std::string& filename)
@@ -62,14 +82,36 @@ namespace dae
 
 	void TourretComponent::FireTourret(float angle)
 	{
+		if (m_IsDead) return;
 		if (!m_CanFire) return;
 
 		m_Angle = angle;
-		m_Bullets.push_back(std::make_shared<Bullet>(m_pOwner.lock()->GetWorldPosition().x , m_pOwner.lock()->GetWorldPosition().y , m_Angle, 150.f, m_Environment));
+		m_Bullets.push_back(std::make_shared<Bullet>
+			(m_pOwner.lock()->GetWorldPosition().x , m_pOwner.lock()->GetWorldPosition().y , m_Angle, 150.f, m_Environment));
 		//fire bullet u just created
 		m_Bullets.back()->Fire(angle);
 
         m_StartTimer = true;
 		m_CanFire = false;
+	}
+	void TourretComponent::DeleteBullet(std::shared_ptr<Bullet> bullet)
+	{
+		m_Bullets.erase(std::remove(m_Bullets.begin(), m_Bullets.end(), bullet), m_Bullets.end());
+	}
+
+	void TourretComponent::HandleEnemyCollision(std::shared_ptr<Bullet> bullet)
+	{
+		if (!bullet) return;
+		for (auto& enemy : m_Enemys)
+		{
+			if (!enemy) return;
+			if (bullet->IsColliding({ enemy.get()->GetLocalPosition().x - m_EnemyCollisionSize.x * 0.35f, enemy.get()->GetLocalPosition().y - m_EnemyCollisionSize.y * 0.35f }
+				, m_EnemyCollisionSize.x, m_EnemyCollisionSize.y))
+			{
+				enemy->GetComponent<EnemyDamageComponent>()->LoseLife();
+				DeleteBullet(bullet);
+			}
+		}
+		
 	}
 }

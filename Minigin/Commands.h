@@ -21,7 +21,7 @@ namespace dae
 
 		TankInput m_Input;
 		float m_Angle{ 0.f };
-		glm::vec2 m_PrevActorPos{};
+		glm::vec2 m_Offset{};
 
 		glm::vec2 CalculateSlidingVector(const glm::vec2& currentPosition, const glm::vec2& potentialNewPosition);
 		

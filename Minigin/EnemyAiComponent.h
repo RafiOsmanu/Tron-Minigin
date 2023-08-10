@@ -32,11 +32,13 @@ namespace dae
 			virtual void Render() override;
 
 			void HandleMovement();
+			void SetIsDead(bool isDead) { m_Isdead = isDead; }
 
 			std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 	private:
 
 		EnemyDirection m_Direction{ EnemyDirection::Left };
+		bool m_Isdead{ false };
 
 
 	};
