@@ -4,68 +4,62 @@
 #include "Commands.h"
 #include "CollisionComponent.h"
 #include "Input.h"
+#include "SceneManager.h"
+#include "DamageComponent.h"
+#include "EnemyAiComponent.h"
+#include "ScoreComponent.h"
 
 void dae::GameStateComponent::Update()
 {
-    if (AllCubesActive(m_MapCubes))
-    {
-        m_IsGameWon = true;
-    }
+	if (SceneManager::GetInstance().GetActiveSceneName() == "VersusModeScene")
+	{
+		if (m_AllEntities[m_AllEntities.size() - 1].lock()->GetComponent<dae::DamageComponent>()->GetIsDead()
+			|| m_AllEntities[m_AllEntities.size() - 2].lock()->GetComponent<dae::DamageComponent>()->GetIsDead()) ResetGame(true, true);
+	}
 
-    if (m_IsGameWon)
-    {
-        //make sure the sound is only played once 
-        if (!m_SoundPlayed)
-        {
-			Engine::ServiceLocator::GetAudioSystem().Play((unsigned short)Engine::Sound::QbertWin, 10.f);
-			m_SoundPlayed = true;
-            Input::GetInstance().GetKeyboard().get()->SetDisableInput(true);
-		}
-        
-        //delay time to goto next level
-        m_Timer += DeltaTime::GetInstance().getDeltaTime();
-        if (m_Timer >= m_TimeToWait)
-        {
-            Input::GetInstance().GetKeyboard().get()->SetDisableInput(false);
-            m_IsGameWon = false;
-            m_SoundPlayed = false;
-			m_Timer = 0.f;
-            //code to go to next level
+	for (auto& entity : m_AllEntities)
+	{
+		if (!entity.lock()->GetComponent<EnemyAiComponent>()) continue;
+		if (!entity.lock()->GetComponent<dae::DamageComponent>()->GetIsDead()) return;
+	}
 
-        }
-    }
-
-    if (m_Player->GetComponent<CollisionComponent>()->IsPlayerDead())
-    {
-        if (!m_SoundPlayed)
-        {
-            Engine::ServiceLocator::GetAudioSystem().Play((unsigned short)Engine::Sound::QbertHit, 10.f);
-            m_SoundPlayed = true;
-            Input::GetInstance().GetKeyboard().get()->SetDisableInput(true);
-        }
-
-        m_Timer += DeltaTime::GetInstance().getDeltaTime();
-        if (m_Timer >= m_TimeToWait)
-        {
-            Input::GetInstance().GetKeyboard().get()->SetDisableInput(false);
-            m_Player->GetComponent<CollisionComponent>()->SetPlayerDead(false);
-            m_SoundPlayed = false;
-            m_Timer = 0.f;
-            //Restart level
-
-        }
-    }
+	ResetGame(true, false);
 }
 
-bool dae::GameStateComponent::AllCubesActive(const std::vector<dae::Cube>& cubes)
+void dae::GameStateComponent::ResetGame(bool goToNextMap, bool resetScore)
 {
-    for (const auto& cube : cubes)
-    {
-        if (!cube.isActive)
-        {
-            return false;
-        }
-    }
+	for (auto& entity : m_AllEntities)
+	{
+		if (!entity.lock()->GetComponent<dae::DamageComponent>()->GetIsDead())
+			entity.lock()->GetComponent<dae::DamageComponent>()->KillOwner();
+	}
 
-    return true;
+	if (resetScore)
+	{
+		if(m_AllEntities[m_AllEntities.size() - 1].lock()->GetComponent<dae::ScoreComponent>())
+		m_AllEntities[m_AllEntities.size() - 1].lock()->GetComponent<dae::ScoreComponent>()->SetCurrentScore(0);
+		m_AllEntities[m_AllEntities.size() - 1].lock()->GetComponent<dae::ScoreComponent>()->AddScore(0);
+
+		if (m_AllEntities[m_AllEntities.size() - 2].lock()->GetComponent<dae::ScoreComponent>())
+		m_AllEntities[m_AllEntities.size() - 2].lock()->GetComponent<dae::ScoreComponent>()->SetCurrentScore(0);
+		m_AllEntities[m_AllEntities.size() - 2].lock()->GetComponent<dae::ScoreComponent>()->AddScore(0);
+	}
+
+
+	if(!m_GoToNextLevel && goToNextMap)
+	{
+		m_pOwner.lock()->GetComponent<MapCreator>()->GoToNextMap();
+		m_GoToNextLevel = true;
+	}
+
+	if (m_pOwner.lock()->GetComponent<MapCreator>()->mapIsLoaded())
+	{
+		for (int i{}; i < m_AllEntities.size(); ++i)
+		{
+			m_AllEntities[i].lock()->GetComponent<dae::DamageComponent>()->ReviveOwner();
+			m_AllEntities[i].lock()->SetLocalPosition(m_EnemyList[i].enemyData.second);
+		}
+		m_GoToNextLevel = false;
+	}
 }
+

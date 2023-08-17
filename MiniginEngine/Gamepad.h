@@ -10,6 +10,8 @@ namespace dae
 		explicit Gamepad(int controllerIndex);
 		~Gamepad();
 
+		//XINPUT_GAMEPAD structure
+		//https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad
 		enum class ControllerButton
 		{
 			DPadUp = 0x0001,
@@ -25,7 +27,7 @@ namespace dae
 			ButtonSouth = 0x1000,
 			ButtonEast = 0x2000,
 			ButtonWest = 0x4000,
-			ButtonNorth = 0x8000
+			ButtonNorth = 0x8000,
 		};
 
 		void Update();

@@ -3,6 +3,7 @@
 #include <memory> 
 #include<algorithm>
 #include "Observer.h"
+#include "../Minigin/BlackBoard.h"
 
 namespace dae
 {
@@ -23,6 +24,13 @@ namespace dae
 		void NotifyObservers(EventType eventType) {
 			for (auto observer : m_observers) {
 				observer->Notify(eventType);
+			}
+		}
+
+		// Method to notify observers that need some sort of text input
+		void NotifyObservers(EventType eventType, std::shared_ptr<dae::BlackBoard> input) {
+			for (auto observer : m_observers) {
+				observer->Notify(eventType, input);
 			}
 		}
 	private:

@@ -8,5 +8,5 @@
 #include "GameStateComponent.h"
 #include "TourretComponent.h"
 #include "EnemyAiComponent.h"
-#include "EnemyDamageComponent.h"
+#include "DamageComponent.h"
 

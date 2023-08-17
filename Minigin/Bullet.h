@@ -7,10 +7,10 @@ namespace dae
 {
 	class Texture2D;
 
-	class Bullet
+	class Bullet final
 	{
 	public:
-		Bullet(float x, float y, float angle, float speed, std::vector<Cube>& cubes);
+		Bullet(float x, float y, float angle, float speed, std::vector<Cube>& cubes, bool isNpc);
 
 		~Bullet() = default;
 		Bullet(const Bullet& other) = delete;
@@ -26,7 +26,7 @@ namespace dae
 			m_IsFired = true;
 		}
 
-		bool IsColliding(Cube mapCube);
+		bool IsColliding(Cube& mapCube);
 		bool IsColliding(glm::vec2 pos, float width, float height);
 		//bool IsColliding();
 		bool BulletIsDone() const { return m_WallBounceCounter >= 5; }
@@ -37,7 +37,7 @@ namespace dae
 		float m_Y;
 		bool m_IsFired;
 		std::shared_ptr<Texture2D> m_texture{};
-		std::vector<Cube> m_Cubes;
+		std::vector<Cube>& m_Cubes;
 		int m_WallBounceCounter{ 0 };
 	};
 }

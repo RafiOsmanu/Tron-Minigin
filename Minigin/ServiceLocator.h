@@ -6,18 +6,18 @@ namespace Engine
 {
 	class ServiceLocator final
 	{
-		static std::unique_ptr<BaseAudioNavigator> m_pSSInstance;
-		static AudioNavigatorNull m_DefaultSS;
+		static std::unique_ptr<BaseAudioNavigator> m_pAudioNavigatorInstance;
+		static AudioNavigatorNull m_DefaultAudioNavigator;
 
 	public:
-		static BaseAudioNavigator& GetAudioSystem() { return *m_pSSInstance.get(); }
-		static void RegisterAudioSystem(BaseAudioNavigator* pSoundSystem)
+		static BaseAudioNavigator& GetAudioSystem() { return *m_pAudioNavigatorInstance.get(); }
+		static void RegisterAudioSystem(BaseAudioNavigator* pAudioNavigator)
 		{
-			m_pSSInstance.reset(pSoundSystem == nullptr ? &m_DefaultSS : pSoundSystem);
+			m_pAudioNavigatorInstance.reset(pAudioNavigator == nullptr ? &m_DefaultAudioNavigator : pAudioNavigator);
 		}
 	};
 
-	inline std::unique_ptr<BaseAudioNavigator> ServiceLocator::m_pSSInstance{};
-	inline AudioNavigatorNull ServiceLocator::m_DefaultSS;
+	inline std::unique_ptr<BaseAudioNavigator> ServiceLocator::m_pAudioNavigatorInstance{};
+	inline AudioNavigatorNull ServiceLocator::m_DefaultAudioNavigator;
 }
 

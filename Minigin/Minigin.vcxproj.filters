@@ -53,10 +53,13 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentsIncludes.h" />
-    <ClInclude Include="EnemyDamageComponent.h">
+    <ClInclude Include="DamageComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackBoard.h">
       <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -103,8 +106,11 @@
     <ClCompile Include="EnemyAiComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyDamageComponent.cpp">
+    <ClCompile Include="DamageComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackBoard.cpp">
+      <Filter>Game Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,25 +1,43 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void dae::SceneManager::Update()
+namespace dae
 {
-	for(auto& scene : m_scenes)
+	void SceneManager::Update()
 	{
-		scene->Update();
+		m_scenes[m_ActiveSceneIdx]->Update();
 	}
-}
 
-void dae::SceneManager::Render()
-{
-	for (const auto& scene : m_scenes)
+	void SceneManager::Render()
 	{
-		scene->Render();
+		m_scenes[m_ActiveSceneIdx]->Render();
 	}
-}
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
-{
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+	void SceneManager::loadScene(std::string sceneName)
+	{
+		m_ActiveSceneIdx = m_SceneData[sceneName];
+		m_ActiveSceneName = m_scenes[m_ActiveSceneIdx]->GetName();
+	}
+
+	bool SceneManager::IsSceneActive(std::string sceneName)
+	{
+		if (m_ActiveSceneIdx == m_SceneData[sceneName])
+			return true;
+
+		return false;
+	}
+
+	std::string& SceneManager::GetActiveSceneName()
+	{
+		return m_ActiveSceneName;
+	}
+
+	Scene& SceneManager::CreateScene(const std::string& name, int sceneIdx)
+	{
+		const auto& scene = std::shared_ptr<Scene>(new Scene(name));
+		m_ActiveSceneIdx = sceneIdx;
+		m_SceneData[name] = sceneIdx;
+		m_scenes.push_back(scene);
+		return *scene;
+	}
 }

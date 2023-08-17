@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include"DataTypes.h"
+#include "../Minigin/BlackBoard.h"
 namespace dae
 {
 	class Observer
@@ -14,6 +15,7 @@ namespace dae
 		Observer& operator= (const Observer&&) = delete;
 
 		virtual void Notify(EventType eventType) = 0;
+		virtual void Notify(EventType eventType, std::shared_ptr<BlackBoard> blackboard) = 0;
 	};
 }
 

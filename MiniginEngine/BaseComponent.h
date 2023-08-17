@@ -4,9 +4,8 @@ namespace dae
 	class GameObject;
 	class BaseComponent
 	{
-		GameObject* m_pOwner;
 	public:
-		BaseComponent() = default;
+		BaseComponent() {};
 		virtual ~BaseComponent() = default;
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;

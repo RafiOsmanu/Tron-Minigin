@@ -44,6 +44,12 @@ namespace dae
 		wall, teleport, voidTile, path 
 	};
 
+	enum EnemyType
+	{
+		recognizer, tank
+	};
+
+
 	struct Cube
 	{
 		glm::vec2 position;  // The position of the cube in world space
@@ -58,5 +64,7 @@ namespace dae
 	{
 		std::pair<std::string, glm::vec2> enemyData;
 	};
+
+
 }
 

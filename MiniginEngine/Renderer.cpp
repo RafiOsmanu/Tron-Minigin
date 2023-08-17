@@ -36,6 +36,8 @@ void dae::Renderer::Init(SDL_Window* window)
 	ImGui::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
+	//ImGui::SetWindowSize(ImVec2(50, 20));
+	
 
 	/*m_Config = std::unique_ptr<RenderPlot>(new RenderPlot);
 	m_Config->MeasureIntListCreation(10);
@@ -51,9 +53,9 @@ void dae::Renderer::Render() const
 	SceneManager::GetInstance().Render();
 
 	//render IMGUI
-	ImGui_ImplOpenGL2_NewFrame();
+	/*ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);
-	ImGui::NewFrame();
+	ImGui::NewFrame();*/
 
 	//DO NOT HARD CODE THE PLOT 
 	//TO DO: MAKE THE PLOT A COMPONENT
@@ -72,8 +74,8 @@ void dae::Renderer::Render() const
 	
 
 	//ImGui::ShowDemoWindow();
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	/*ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());*/
 
 	
 	SDL_RenderPresent(m_renderer);

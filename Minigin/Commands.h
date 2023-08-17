@@ -19,11 +19,11 @@ namespace dae
 		float m_CurrentSpeed;
 		glm::vec3 m_Direction{(0.f, 0.f, 0.f)};
 
-		TankInput m_Input;
+		
 		float m_Angle{ 0.f };
 		glm::vec2 m_Offset{};
 
-		glm::vec2 CalculateSlidingVector(const glm::vec2& currentPosition, const glm::vec2& potentialNewPosition);
+		
 		
 	};
 
@@ -71,6 +71,43 @@ namespace dae
 	private:
 		std::shared_ptr<GameObject> m_Actor;
 	};
+
+	class SkipMapCommand final : public Command
+	{
+	public:
+		SkipMapCommand(const std::shared_ptr<GameObject> actor);
+		virtual void Execute() override;
+	private:
+		std::shared_ptr<GameObject> m_Actor;
+	};
+
+	class StartGameCommand final : public Command
+	{
+	public:
+		StartGameCommand(const std::shared_ptr<GameObject> firstPlayer, const std::shared_ptr<GameObject> secondPLayer);
+		virtual void Execute() override;
+	private:
+		std::shared_ptr<GameObject> m_FirstPlayer;
+		std::shared_ptr<GameObject> m_SecondPlayer;
+	};
+
+	class SwitchGameModeCommand final : public Command
+	{
+	public:
+		SwitchGameModeCommand(const std::shared_ptr<GameObject> actor);
+		virtual void Execute() override;
+	private:
+		int m_ModeIndx{ 1 };
+		std::shared_ptr<GameObject> m_Actor;
+	};
+
+	class MuteAudioCommand final : public Command
+	{
+	public:
+		MuteAudioCommand() {};
+		virtual void Execute() override;
+	};
+
 	
 }
 

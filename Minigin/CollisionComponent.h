@@ -6,7 +6,7 @@
 
 namespace dae
 {
-	class CollisionComponent : public BaseComponent
+	class CollisionComponent final : public BaseComponent
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 	public:
@@ -14,12 +14,8 @@ namespace dae
 			m_pOwner(pOwner),
 			m_MapCubes(mapCubes)
 		{
-			for (auto& cube : m_MapCubes)
-			{
-				if (cube.cubeType == dae::MapTerrain::path)
-					m_PathCubes.push_back(cube);
-			}
-		}
+			
+		};
 
 		CollisionComponent(const CollisionComponent&) = delete;
 		CollisionComponent(CollisionComponent&&) = delete;
@@ -36,19 +32,25 @@ namespace dae
 		void SetFuturePos(glm::vec2 futurePos) { m_FuturePos = futurePos; }
 		void SetIsDead(bool isDead) { m_IsDead = isDead; }
 
+		void SetPlayersToCollideWith(std::vector<std::weak_ptr<GameObject>> playersToCollideWith) { m_PlayersToCollideWith = playersToCollideWith; }
+
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 
 	private:
-		bool IsColliding(glm::vec2 playerPos, Cube mapCube);
+		bool IsColliding(glm::vec2 playerPos, Cube& mapCube);
+		bool IsCollidingWithPlayer(glm::vec2 playerPos, glm::vec2 playerPos2);
 		bool IsNotColliding();
 		bool m_IsPlayerDead{ false };
-		std::vector<Cube> m_MapCubes;
+		std::vector<Cube>& m_MapCubes;
 		bool m_IsColliding{ false };
 		bool m_IsNotColliding{ false };
 		glm::vec2 m_FuturePos{ 0,0 };
 		bool m_IsDead{ false };
+		float m_CollisionBoxSize{7.f};
 
-		std::vector<Cube> m_PathCubes{};
+
+		std::vector<std::weak_ptr<GameObject>> m_PlayersToCollideWith;
+		
 		
 	};
 }

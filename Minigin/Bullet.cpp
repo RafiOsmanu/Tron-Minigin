@@ -5,18 +5,22 @@
 
 namespace dae
 {
-	Bullet::Bullet(float x, float y, float angle, float speed, std::vector<Cube>& cubes)
+	Bullet::Bullet(float x, float y, float angle, float speed, std::vector<Cube>& cubes, bool isNpc)
 		: m_X(x),
 		  m_Y(y),
 		  m_Angle(angle),
 		  m_Speed(speed),
 		  m_Cubes(cubes)
 	{
+		if(!isNpc)
 		m_texture = ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png");
+		else
+		m_texture = ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png");
 	}
 
 	void Bullet::Update(float deltaTime)
 	{
+		//if (!m_Cubes.data()) return;
 		if (m_IsFired)
 		{
 			for (auto& cube : m_Cubes)
@@ -71,7 +75,7 @@ namespace dae
 		}
 	}
 
-	bool Bullet::IsColliding(Cube mapCube)
+	bool Bullet::IsColliding(Cube& mapCube)
 	{
 		// Collision detection
 		if (mapCube.cubeType != dae::MapTerrain::wall)

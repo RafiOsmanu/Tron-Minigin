@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include <set>
+#include "DataTypes.h"
 
 namespace dae
 {
@@ -17,12 +18,14 @@ namespace dae
 		Down
 	};
 
-	class EnemyAiComponent : public BaseComponent
+	class EnemyAiComponent final : public BaseComponent
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 		public:
-			explicit EnemyAiComponent(std::shared_ptr<GameObject> pOwner) : m_pOwner(pOwner)
+			explicit EnemyAiComponent(std::shared_ptr<GameObject> pOwner, EnemyType type) : m_pOwner(pOwner) , m_Type(type)
 			{
+				if (type == EnemyType::tank) m_Speed = 50.f;
+				else if (type == EnemyType::recognizer) m_Speed = 75.f;
 			};
 			EnemyAiComponent(const EnemyAiComponent& other) = delete;
 			EnemyAiComponent(EnemyAiComponent&& other) = delete;
@@ -33,12 +36,16 @@ namespace dae
 
 			void HandleMovement();
 			void SetIsDead(bool isDead) { m_Isdead = isDead; }
+			EnemyType GetEnemyType() { return m_Type; }
 
 			std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 	private:
 
 		EnemyDirection m_Direction{ EnemyDirection::Left };
+		EnemyType m_Type{};
+
 		bool m_Isdead{ false };
+		float m_Speed{ 50.f };
 
 
 	};

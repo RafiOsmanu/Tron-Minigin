@@ -7,14 +7,15 @@
 
 namespace dae
 {
-	class GameStateComponent : public BaseComponent
+	class GameStateComponent final: public BaseComponent
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 	public:
-		explicit GameStateComponent(std::shared_ptr<GameObject> pOwner, std::shared_ptr<GameObject> player) :
+		explicit GameStateComponent(std::shared_ptr<GameObject> pOwner, std::vector<std::weak_ptr<GameObject>> allEnteties, std::vector<EnemyData> enemyDataList) :
 			m_pOwner(pOwner), 
-			m_Player(player),
-			m_MapCubes(m_pOwner.lock().get()->GetComponent<MapCreator>().get()->GetCubes())
+			m_AllEntities(allEnteties),
+			m_MapCubes(m_pOwner.lock().get()->GetComponent<MapCreator>().get()->GetCubes()),
+			m_EnemyList(enemyDataList)
 		{
 			//m_MapCubes = m_pOwner.lock().get()->GetComponent<MapCreator>().get()->GetCubes();
 		};
@@ -28,20 +29,16 @@ namespace dae
 
 		virtual void Update() override;
 		virtual void Render() override {};
-
+		void ResetGame(bool goToNextMap, bool resetScore);
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
+
+
 	private:
-		bool AllCubesActive(const std::vector<dae::Cube>& cubes);
 
-		bool m_IsGameOver{ false };
-		bool m_IsGameWon{ false };
-		bool m_SoundPlayed{ false };
-		bool m_AllCubesActive{ true };
-		std::shared_ptr<GameObject> m_Player;
+		std::vector<std::weak_ptr<GameObject>> m_AllEntities;
 		std::vector<Cube>& m_MapCubes;
-
-		float m_Timer{ 0.f };
-		float m_TimeToWait{ 3.f };
+		std::vector<EnemyData> m_EnemyList;
+		bool m_GoToNextLevel{ false };
 
 	};
 }

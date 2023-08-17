@@ -7,11 +7,19 @@
 #include "Input.h"
 #include "TourretComponent.h"
 #include "CollisionComponent.h"
+#include "MapCreator.h"
+#include "SceneManager.h"
+#include "TextObject.h"
+#include "GameStateComponent.h"
+#include "ServiceLocator.h"
 
 dae::MoveCommand::MoveCommand(const std::shared_ptr<GameObject> actor, float speed, TankInput input)
 	:m_Actor{actor}
 	,m_Speed{speed}
 	,m_CurrentSpeed{speed}
+	,m_Direction{}
+	,m_Angle{0.f}
+	,m_Offset{}
 {
 	switch (input)
 	{
@@ -48,30 +56,10 @@ void dae::MoveCommand::Execute()
 
 	m_Actor->SetLocalPosition({ translation.x, translation.y});
 	
-	//Engine::ServiceLocator::GetAudioSystem().Play((unsigned short)Engine::Sound::QbertJump, 10.f);
+	
 }
 
-glm::vec2 dae::MoveCommand::CalculateSlidingVector(const glm::vec2& currentPosition, const glm::vec2& potentialNewPosition)
-{
-	glm::vec2 direction = potentialNewPosition - currentPosition;
-	glm::vec2 slidingVector{};
 
-	if (direction.x > 0)
-		slidingVector.x = std::floor(potentialNewPosition.x) - currentPosition.x;
-	else if (direction.x < 0)
-		slidingVector.x = std::ceil(potentialNewPosition.x) - currentPosition.x;
-	else
-		slidingVector.x = 0;
-
-	if (direction.y > 0)
-		slidingVector.y = std::floor(potentialNewPosition.y) - currentPosition.y;
-	else if (direction.y < 0)
-		slidingVector.y = std::ceil(potentialNewPosition.y) - currentPosition.y;
-	else
-		slidingVector.y = 0;
-
-	return slidingVector;
-}
 
 //void dae::MoveCommand::Update()
 //{
@@ -140,4 +128,74 @@ dae::ShootTourretCommand::ShootTourretCommand(const std::shared_ptr<GameObject> 
 void dae::ShootTourretCommand::Execute()
 {
 	m_Actor->GetComponent<dae::TourretComponent>()->FireTourret(s_CurrentAngle);
+}
+
+dae::SkipMapCommand::SkipMapCommand(const std::shared_ptr<GameObject> actor)
+	:m_Actor{ actor }
+	 
+{
+}
+
+void dae::SkipMapCommand::Execute()
+{
+	m_Actor->GetComponent<dae::GameStateComponent>()->ResetGame(true, true);
+}
+
+
+dae::StartGameCommand::StartGameCommand(const std::shared_ptr<GameObject> firstPlayer, const std::shared_ptr<GameObject> secondPLayer)
+	:m_FirstPlayer{firstPlayer}
+	,m_SecondPlayer{secondPLayer}
+{
+}
+
+void dae::StartGameCommand::Execute()
+{
+	if (!SceneManager::GetInstance().IsSceneActive("StartScreen")) return;
+	std::string nextScene = SceneManager::GetInstance().GetNextSceneName();
+
+	if (nextScene == "VersusModeScene")
+	{
+		m_FirstPlayer->GetComponent<dae::TourretComponent>()->AddEnemy(m_SecondPlayer);
+		m_SecondPlayer->GetComponent<dae::TourretComponent>()->AddEnemy(m_FirstPlayer);
+		m_SecondPlayer->GetComponent<dae::TextureComponent>()->SetTexture("Sprites/PinkTank.png");
+
+		m_FirstPlayer->GetComponent<dae::ScoreComponent>()->SetScoreActive(false);
+		m_FirstPlayer->GetComponent<dae::TextObject>()->SetText("Red VS Pink");
+	}
+	SceneManager::GetInstance().loadScene(nextScene);
+
+	Engine::ServiceLocator::GetAudioSystem().Stop((Engine::SoundId)Engine::Sound::mainMenu);
+	Engine::ServiceLocator::GetAudioSystem().Play((Engine::SoundId)Engine::Sound::background, 6.f);
+}
+
+dae::SwitchGameModeCommand::SwitchGameModeCommand(const std::shared_ptr<GameObject> actor)
+	:m_Actor{ actor }
+{
+}
+
+void dae::SwitchGameModeCommand::Execute()
+{
+	if (!SceneManager::GetInstance().IsSceneActive("StartScreen")) return;
+
+	switch (m_ModeIndx++ % 3)
+	{
+	case 0:
+		SceneManager::GetInstance().SetNextSceneName("SoloModeScene");
+		m_Actor->GetComponent<dae::TextObject>()->SetText("GameMode: Solo Mode");
+		break;
+	case 1:
+		SceneManager::GetInstance().SetNextSceneName("CoopModeScene");
+		m_Actor->GetComponent<dae::TextObject>()->SetText("GameMode: Co-op Mode");
+		break;
+	case 2:
+		SceneManager::GetInstance().SetNextSceneName("VersusModeScene");
+		m_Actor->GetComponent<dae::TextObject>()->SetText("GameMode: Versus Mode");
+		break;
+
+	}
+}
+
+void dae::MuteAudioCommand::Execute()
+{
+	Engine::ServiceLocator::GetAudioSystem().MuteAllAudio();
 }

@@ -10,7 +10,7 @@ namespace dae
 {
 	
 
-	class HealthComponent : public BaseComponent
+	class HealthComponent final : public BaseComponent
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 	public:

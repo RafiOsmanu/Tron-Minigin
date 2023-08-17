@@ -180,13 +180,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AudioNavigator.h" />
+    <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ComponentsIncludes.h" />
     <ClInclude Include="DeathObserver.h" />
     <ClInclude Include="EnemyAiComponent.h" />
-    <ClInclude Include="EnemyDamageComponent.h" />
+    <ClInclude Include="DamageComponent.h" />
     <ClInclude Include="GameStateComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="MapCreator.h" />
@@ -198,12 +199,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioNavigator.cpp" />
+    <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="DeathObserver.cpp" />
     <ClCompile Include="EnemyAiComponent.cpp" />
-    <ClCompile Include="EnemyDamageComponent.cpp" />
+    <ClCompile Include="DamageComponent.cpp" />
     <ClCompile Include="GameStateComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="Main.cpp" />

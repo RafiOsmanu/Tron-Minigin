@@ -7,7 +7,7 @@
 namespace dae
 {
 
-	class MoveComponent : public BaseComponent
+	class MoveComponent final : public BaseComponent
 	{
 		std::weak_ptr<GameObject> m_pOwner;
 	public:

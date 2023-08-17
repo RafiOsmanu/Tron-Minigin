@@ -17,6 +17,7 @@ namespace dae
 			, std::shared_ptr<TextObject> healthText);
 
 		void Notify(EventType eventType) override;
+		void Notify(EventType eventType, std::shared_ptr<BlackBoard> blackboard) override;
 
 		
 	private:

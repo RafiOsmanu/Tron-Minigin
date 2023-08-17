@@ -28,4 +28,7 @@ namespace dae
             break;
         }
     }
+    void DeathObserver::Notify(EventType /*eventType*/, std::shared_ptr<BlackBoard> /*blackboard*/)
+    {
+    }
 }

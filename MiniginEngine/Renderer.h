@@ -32,6 +32,7 @@ namespace dae
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 
 		void DrawRect(const SDL_Rect& rect) const;
+		SDL_Window* GetWindow() const { return m_window; }
 		
 	private:
 		std::unique_ptr<RenderPlot> m_Config;

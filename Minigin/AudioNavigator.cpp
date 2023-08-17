@@ -68,10 +68,25 @@ public:
 		m_ConditionVariable.notify_all();
 	}
 
+	void MuteAllAudio()
+	{
+		if (!m_IsAudioMuted)
+		{
+			m_IsAudioMuted = true;
+			Mix_MasterVolume(0);
+		}
+		else
+		{
+			m_IsAudioMuted = false;
+			Mix_MasterVolume(MIX_MAX_VOLUME);
+		}
+	}
+
 	void StopSound(const SoundId id)
 	{
 		if (m_IsMixerClosed) return;
 		Mix_HaltChannel(id);
+		
 	}
 	void AddSound(const std::string& path, const SoundId id, bool loopSound = false)
 	{
@@ -90,20 +105,22 @@ public:
 	}
 
 
+
+
 private:
 
 	struct Sound
 	{
 		std::string path;
-		Mix_Chunk* pChunk;
-		bool isLoaded;
-		bool loopSound;
+		Mix_Chunk* pChunk{};
+		bool isLoaded{};
+		bool loopSound{};
 	};
 
 	struct SoundRequest
 	{
-		SoundId id;
-		float volume;
+		SoundId id{};
+		float volume{};
 	};
 
 	std::map<SoundId, Sound> m_Sounds;
@@ -115,6 +132,8 @@ private:
 	std::jthread m_Thread;
 	bool m_IsMixerClosed{ true };
 
+	bool m_IsAudioMuted{ false };
+
 	void Update()
 	{
 		while (true)
@@ -122,36 +141,37 @@ private:
 
 			//wait until the queue is not empty
 			std::unique_lock<std::mutex> lock(m_CvMutex);
-			m_ConditionVariable.wait(lock, [&] {return !m_SoundRequests.empty(); });
+			m_ConditionVariable.wait(lock, [&] {return !m_SoundRequests.empty() || m_IsMixerClosed; });
 
 
 			if (m_IsMixerClosed)
 				return;
 
-			if (!m_SoundRequests.empty())
+			
+			const SoundRequest& request = m_SoundRequests.front();
+			m_SoundRequests.pop();
+
+			//release the lock before playing the sound
+			lock.unlock();
+
+			// Requested sound is not in the list of sounds
+			if (request.id >= m_Sounds.size()) continue;
+			
+
+			auto& sound = m_Sounds[request.id];
+
+			if (!sound.isLoaded)
 			{
-				const SoundRequest& request = m_SoundRequests.front();
-				m_SoundRequests.pop();
-
-				//release the lock before playing the sound
-				lock.unlock();
-
-				// Requested sound is not in the list of sounds
-				if (request.id >= m_Sounds.size()) continue;
-				
-
-				auto& sound = m_Sounds[request.id];
-
-				if (!sound.isLoaded)
-				{
-					sound.pChunk = Mix_LoadWAV(sound.path.c_str());
-					sound.isLoaded = true;
-				}
-
-				// Play the sound
-				Mix_VolumeChunk(sound.pChunk, static_cast<int>(request.volume));
-				Mix_PlayChannel(request.id, sound.pChunk, 0);
+				sound.pChunk = Mix_LoadWAV(sound.path.c_str());
+				sound.isLoaded = true;
 			}
+
+			// Play the sound
+			Mix_VolumeChunk(sound.pChunk, static_cast<int>(request.volume));
+			if(sound.loopSound)
+				Mix_PlayChannel(request.id, sound.pChunk, -1);
+			else
+				Mix_PlayChannel(request.id, sound.pChunk, 0);
 		}
 	}
 };
@@ -169,6 +189,11 @@ void Engine::Sdl_AudioNavigator::Play(const SoundId id, const float volume)
 void Engine::Sdl_AudioNavigator::Stop(const SoundId id)
 {
 	m_pImpl->StopSound(id);
+}
+
+void Engine::Sdl_AudioNavigator::MuteAllAudio()
+{
+	m_pImpl->MuteAllAudio();
 }
 
 void Engine::Sdl_AudioNavigator::AddSound(const std::string& path, const SoundId id, bool loopSound)

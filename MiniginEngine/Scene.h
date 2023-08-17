@@ -6,7 +6,7 @@ namespace dae
 	class GameObject;
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
+		friend Scene& SceneManager::CreateScene(const std::string& name, int sceneIdx);
 	public:
 		void Add(std::shared_ptr<GameObject> object);
 		void Remove(std::shared_ptr<GameObject> object);
@@ -14,6 +14,7 @@ namespace dae
 
 		void Update();
 		void Render() const;
+		std::string GetName() const { return m_name; }
 
 		~Scene();
 		Scene(const Scene& other) = delete;
