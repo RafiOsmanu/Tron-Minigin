@@ -18,7 +18,7 @@ namespace dae
     MapCreator::MapCreator(std::shared_ptr<GameObject> pOwner)
         : m_pOwner(pOwner)
     {
-        CreateMap("C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/Layout/LevelLayout0.json", 0);
+        CreateMap("../Data/Layout/LevelLayout0.json", 0);
        
     }
 
@@ -139,13 +139,13 @@ namespace dae
         switch (++m_mapIndicator % 3)
         {
         case 0:
-            CreateMap("C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/Layout/LevelLayout0.json", 0);
+            CreateMap("../Data/Layout/LevelLayout0.json", 0);
             break;
         case 1:
-            CreateMap("C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/Layout/LevelLayout1.json", 1);
+            CreateMap("../Data/Layout/LevelLayout1.json", 1);
             break;
         case 2:
-            CreateMap("C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/Layout/LevelLayout2.json", 2);
+            CreateMap("../Data/Layout/LevelLayout2.json", 2);
             break;
         }
     }
@@ -153,29 +153,3 @@ namespace dae
 }
 
 
-//OLD CODE
-            //const float cubeSize{ 37.f }; // The size of each cube in pixels
-            //const int xOffset{ 250 }; // The x-offset from the left edge of the viewport
-            //const int yOffset{ 250 }; // The y-offset from the top edge of the viewport
-
-//for (int row{}; row < m_NumRows; row++)
-            //{
-            //    int numCols = row + 1;
-            //    float xRowOffset = (row % 2 == 0) ? cubeSize / 2.f : 0;
-
-//    for (int col{}; col < numCols; col++)
-            //    {
-            //        // Calculate the position of the cube in the viewport
-            //        float xPos{ xOffset + xRowOffset + (col - row / 2) * cubeSize };
-            //        float yPos{ yOffset + row * cubeSize/1.35f };
-
-//        // Create a new cube object with the appropriate position
-            //        Cube cube;
-            //        cube.size = cubeSize;
-            //        cube.position = { xPos, yPos };
-            //        cube.texture = ResourceManager::GetInstance().LoadTexture("InactiveCube.png");
-
-//        // Add the cube object to the list of cubes
-            //        m_Cubes.emplace_back(cube);
-            //    }
-            //}

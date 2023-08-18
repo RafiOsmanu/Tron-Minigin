@@ -21,7 +21,7 @@ namespace dae
 
 	bool SceneManager::IsSceneActive(std::string sceneName)
 	{
-		if (m_ActiveSceneIdx == m_SceneData[sceneName])
+		if (m_ActiveSceneIdx == static_cast<size_t>(m_SceneData[sceneName]))
 			return true;
 
 		return false;

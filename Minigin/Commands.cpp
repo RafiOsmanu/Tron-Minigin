@@ -61,32 +61,6 @@ void dae::MoveCommand::Execute()
 
 
 
-//void dae::MoveCommand::Update()
-//{
-//	if (m_IsMoving)
-//	{
-//		if (glm::distance(m_Actor->GetLocalPosition(), m_OgPos) < 32.5f)
-//		{
-//			auto translation = glm::vec3(m_Actor->GetLocalPosition(), 0) + (m_Direction * m_Speed * DeltaTime::GetInstance().getDeltaTime());
-//			m_Actor->SetLocalPosition({ translation.x, translation.y });
-//		}
-//		else
-//		{
-//			if (m_Timer >= m_MaxTime)
-//			{
-//				m_IsMoving = false;
-//				m_Actor->SetIsMoving(false);
-//				m_Timer = 0.f;
-//			}
-//			else
-//			{
-//				m_Timer += DeltaTime::GetInstance().getDeltaTime();
-//			}
-//			
-//		}
-//	}
-//}
-
 dae::DamageCommand::DamageCommand(const std::shared_ptr<GameObject> actor)
 	:m_Actor{actor}
 {

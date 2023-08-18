@@ -54,7 +54,7 @@ void dae::GameStateComponent::ResetGame(bool goToNextMap, bool resetScore)
 
 	if (m_pOwner.lock()->GetComponent<MapCreator>()->mapIsLoaded())
 	{
-		for (int i{}; i < m_AllEntities.size(); ++i)
+		for (size_t i{}; i < m_AllEntities.size(); ++i)
 		{
 			m_AllEntities[i].lock()->GetComponent<dae::DamageComponent>()->ReviveOwner();
 			m_AllEntities[i].lock()->SetLocalPosition(m_EnemyList[i].enemyData.second);

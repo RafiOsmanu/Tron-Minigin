@@ -52,17 +52,17 @@ namespace dae
 
 	struct Cube
 	{
-		glm::vec2 position;  // The position of the cube in world space
-		float size;          // The size of the cube
-		glm::vec3 color;     // The color of the cube
-		std::shared_ptr<Texture2D> texture;
+		glm::vec2 position{};  // The position of the cube in world space
+		float size{};          // The size of the cube
+		glm::vec3 color{};     // The color of the cube
+		std::shared_ptr<Texture2D> texture{};
 		bool isActive = false;
-		MapTerrain cubeType;
+		MapTerrain cubeType{};
 	};
 
 	struct EnemyData
 	{
-		std::pair<std::string, glm::vec2> enemyData;
+		std::pair<std::string, glm::vec2> enemyData{};
 	};
 
 

@@ -8,9 +8,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="BattleTank Files">
-      <UniqueIdentifier>{d02ccf43-70c1-4cc8-99ec-824cbcb3612e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -34,20 +31,11 @@
     <ClInclude Include="MapCreator.h">
       <Filter>Game Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioNavigator.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceLocator.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GameStateComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TourretComponent.h">
-      <Filter>BattleTank Files</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAiComponent.h">
       <Filter>Components</Filter>
@@ -61,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="BlackBoard.h">
       <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TourretComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,17 +79,11 @@
     <ClCompile Include="Commands.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
-    <ClCompile Include="AudioNavigator.cpp">
-      <Filter>Game Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GameStateComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TourretComponent.cpp">
-      <Filter>BattleTank Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Game Files</Filter>
@@ -111,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="BlackBoard.cpp">
       <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TourretComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

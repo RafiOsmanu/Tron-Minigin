@@ -15,6 +15,9 @@ namespace dae
 			m_pOwner(pOwner),
 			m_Player(player)
 		{
+			if (m_Player)
+			m_Lives = 4;
+			
 		};
 		
 

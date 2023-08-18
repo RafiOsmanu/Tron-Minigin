@@ -179,7 +179,6 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AudioNavigator.h" />
     <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionComponent.h" />
@@ -194,11 +193,9 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreObserver.h" />
-    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="TourretComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AudioNavigator.cpp" />
     <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />

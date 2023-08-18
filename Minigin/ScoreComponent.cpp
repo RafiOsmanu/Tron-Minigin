@@ -38,7 +38,7 @@ namespace dae
 		using rapidjson::Document;
 		Document jsonDoc;
 
-		if (std::ifstream inputFile{ "C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/GameData/HighScores.json" })
+		if (std::ifstream inputFile{ "../Data/GameData/HighScores.json" })
 		{
 			rapidjson::IStreamWrapper inputFileWrapper{ inputFile };
 			jsonDoc.ParseStream(inputFileWrapper);

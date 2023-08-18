@@ -44,7 +44,7 @@ void dae::ScoreObserver::Notify(EventType eventType, std::shared_ptr<BlackBoard>
         using rapidjson::Document;
         Document jsonDoc;
 
-        if (std::ifstream inputFile{ "C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/GameData/HighScores.json" })
+        if (std::ifstream inputFile{ "../Data/GameData/HighScores.json" })
         {
             rapidjson::IStreamWrapper inputFileWrapper{ inputFile };
             jsonDoc.ParseStream(inputFileWrapper);
@@ -63,7 +63,7 @@ void dae::ScoreObserver::Notify(EventType eventType, std::shared_ptr<BlackBoard>
             WriteScore(currentScore, nameInput, jsonDoc, blackboard);
 
             // Write the modified JSON back to the file
-            std::ofstream outputFile("C:/DAE/RETAKES/progg 4/Tron-Minigin/Data/GameData/HighScores.json");
+            std::ofstream outputFile("../Data/GameData/HighScores.json");
             if (!outputFile.is_open()) {
                 std::cout << "Failed to open output file for writing." << std::endl;
                 return;

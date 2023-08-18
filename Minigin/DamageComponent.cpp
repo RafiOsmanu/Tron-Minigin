@@ -46,6 +46,9 @@ void dae::DamageComponent::ReviveOwner()
 		m_pOwner.lock().get()->GetComponent<dae::EnemyAiComponent>()->SetIsDead(false);
 
 	m_IsDead = false;
+	if (m_Player)
+	m_Lives = 4;
+	else
 	m_Lives = 3;
 }
 

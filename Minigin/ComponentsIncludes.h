@@ -1,5 +1,6 @@
 #pragma once
 //COMPONENTS INCLUDES
+#include "TextObject.h"
 #include "TextureComponent.h"
 #include "MoveComponent.h"
 #include "HealthComponent.h"
