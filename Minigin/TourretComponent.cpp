@@ -28,9 +28,6 @@ namespace dae
 			//check if bullet is colliding with enemy
 			if (HandleEnemyCollision(bullet)) continue;
 
-			
-
-
 			bullet->Update(DeltaTime::GetInstance().getDeltaTime());
 			if (bullet->BulletIsDone())
 			{
@@ -81,19 +78,6 @@ namespace dae
 			bullet->Render();
 		}
 
-		/*for (auto& enemy : m_Enemys)
-		{
-			if (!enemy) return;
-			SDL_Rect rect
-			{
-			   int(enemy.get()->GetLocalPosition().x - m_EnemyCollisionSize.x * 0.35f), 
-			   int(enemy.get()->GetLocalPosition().y - m_EnemyCollisionSize.y * 0.35f),
-			   (int)m_EnemyCollisionSize.x,
-			   (int)m_EnemyCollisionSize.y
-			};
-		
-			Renderer::GetInstance().DrawRect(rect);
-		}*/
 	}
 
 	void TourretComponent::SetTexture(const std::string& filename)
@@ -130,6 +114,19 @@ namespace dae
 	{
 		m_IsDead = isDead;
 		if (m_AutoShoot) return;
+	}
+
+	void TourretComponent::ResetBullets()
+	{
+		for (auto& bullet : m_Bullets)
+		{
+			if (!bullet) continue;
+			DeleteBullet(bullet);
+		}
+		m_Bullets.clear();
+
+		if (m_AutoShoot) FireTourret(m_Angle);
+
 	}
 
 	bool TourretComponent::HandleEnemyCollision(std::shared_ptr<Bullet> bullet)

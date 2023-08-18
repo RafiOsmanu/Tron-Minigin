@@ -53,7 +53,11 @@ namespace dae
 		{
 			if (IsCollidingWithPlayer(m_pOwner.lock()->GetLocalPosition(), player.lock()->GetLocalPosition()))
 			{
+				if(player.lock()->GetComponent<DamageComponent>()->GetIsDead())
+					continue;
+
 				player.lock()->GetComponent<DamageComponent>()->KillOwner();
+				Engine::ServiceLocator::GetAudioSystem().Play((Engine::SoundId)Engine::Sound::loseGame, 4.f);
 			}	
 		}
 	}

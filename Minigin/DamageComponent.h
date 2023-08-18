@@ -43,6 +43,7 @@ namespace dae
 		bool m_IsDead{ false };
 		bool m_Player{ false };
 		bool m_OwnerKilled{ false };
+		
 
 		int m_Lives { 3 };
 

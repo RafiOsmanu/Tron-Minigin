@@ -54,6 +54,8 @@ namespace dae
 		void SetIsDead(bool isDead);
 		void SetEnemyCollisionSize(glm::vec2 size) { m_EnemyCollisionSize = size; }
 
+		void ResetBullets();
+
 		std::weak_ptr<GameObject> GetOwner() const { return m_pOwner; }
 	private:
 		//tourret texture variables

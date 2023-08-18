@@ -36,13 +36,19 @@ namespace dae
 	private:
 		//DataMembers
 		std::vector<Cube> m_Cubes;
+
+		std::vector<Cube> m_Level1;
+		std::vector<Cube> m_Level2;
+		std::vector<Cube> m_Level3;
+		
+		bool m_AllmapsLoaded{ false };
 	
 		void RenderCube(const Cube& cube);
 
 		int m_mapIndicator{0};
 
 		float m_Timer{};
-		float m_TimeToNextMap{ 4.6f };
+		float m_TimeToNextMap{ 1.f };
 		bool m_StartTimer{ false };
 		bool m_MapIsLoaded{ false };
 	};

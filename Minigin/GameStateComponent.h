@@ -17,7 +17,6 @@ namespace dae
 			m_MapCubes(m_pOwner.lock().get()->GetComponent<MapCreator>().get()->GetCubes()),
 			m_EnemyList(enemyDataList)
 		{
-			//m_MapCubes = m_pOwner.lock().get()->GetComponent<MapCreator>().get()->GetCubes();
 		};
 
 		
@@ -34,7 +33,6 @@ namespace dae
 
 
 	private:
-
 		std::vector<std::weak_ptr<GameObject>> m_AllEntities;
 		std::vector<Cube>& m_MapCubes;
 		std::vector<EnemyData> m_EnemyList;

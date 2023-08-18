@@ -19,6 +19,13 @@ namespace dae
         : m_pOwner(pOwner)
     {
         CreateMap("../Data/Layout/LevelLayout0.json", 0);
+        m_Cubes.clear();
+        CreateMap("../Data/Layout/LevelLayout1.json", 1);
+        m_Cubes.clear();
+        CreateMap("../Data/Layout/LevelLayout2.json", 2);
+        m_Cubes.clear();
+
+        m_Cubes = m_Level1;
        
     }
 
@@ -26,15 +33,17 @@ namespace dae
 	{
         if (m_StartTimer)
         {
-            m_Timer += DeltaTime::GetInstance().getDeltaTime();
+			m_Timer += DeltaTime::GetInstance().getDeltaTime();
             if (m_Timer >= m_TimeToNextMap)
             {
 				m_Timer = 0.f;
 				m_StartTimer = false;
                 m_MapIsLoaded = true;
 			}
-        }
+		}
 	}
+	
+	
 
     void MapCreator::Render() {
        
@@ -42,6 +51,7 @@ namespace dae
         {
             RenderCube(cube);
         }
+
     }
 
     void MapCreator::RenderCube(const Cube& cube) {
@@ -51,7 +61,6 @@ namespace dae
     }
     void MapCreator::CreateMap(std::string mapAdress, int colorIndicator)
     {
-
         using rapidjson::Document;
         Document jsonDoc;
 
@@ -73,17 +82,17 @@ namespace dae
 
         for (const auto& value : jsonDoc.GetArray())
         {
-           
+
             //switch for value 
             switch (value.GetInt())
             {
             case 0:
-                if(colorIndicator == 0)
-                cube.texture = ResourceManager::GetInstance().LoadTexture("Level/greenWall.png");
-                else if(colorIndicator == 1)
-					cube.texture = ResourceManager::GetInstance().LoadTexture("Level/yellowWall.png");
-				else
-					cube.texture = ResourceManager::GetInstance().LoadTexture("Level/orangeWall.png");
+                if (colorIndicator == 0)
+                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/greenWall.png");
+                else if (colorIndicator == 1)
+                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/yellowWall.png");
+                else
+                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/orangeWall.png");
 
 
                 cube.cubeType = dae::MapTerrain::wall;
@@ -127,25 +136,41 @@ namespace dae
 
         }
 
+        switch (m_mapIndicator++)
+        {
+        case 0:
+            m_Level1 = m_Cubes;
+            break;
+        case 1:
+            m_Level2 = m_Cubes;
+            break;
+        case 2:
+            m_Level3 = m_Cubes;
+            m_mapIndicator = 0;
+            break;
+        }
     }
 
 
     void MapCreator::GoToNextMap()
     {
-        m_Cubes.clear();
-        m_StartTimer = true;
         m_MapIsLoaded = false;
+        m_StartTimer = true;
+
+       //empty the vector
+        m_Cubes.clear();
+
 
         switch (++m_mapIndicator % 3)
         {
         case 0:
-            CreateMap("../Data/Layout/LevelLayout0.json", 0);
+            m_Cubes = m_Level1;
             break;
         case 1:
-            CreateMap("../Data/Layout/LevelLayout1.json", 1);
+            m_Cubes = m_Level2;
             break;
         case 2:
-            CreateMap("../Data/Layout/LevelLayout2.json", 2);
+            m_Cubes = m_Level3;
             break;
         }
     }
