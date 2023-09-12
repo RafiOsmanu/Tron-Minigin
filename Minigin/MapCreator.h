@@ -20,7 +20,6 @@ namespace dae
 		MapCreator& operator= (const MapCreator&&) = delete;
 
 		//Fuctions
-
 		void Update() override;
 		void Render() override;
 
@@ -40,6 +39,15 @@ namespace dae
 		std::vector<Cube> m_Level1;
 		std::vector<Cube> m_Level2;
 		std::vector<Cube> m_Level3;
+
+		Cube m_WallTileL1;
+		Cube m_WallTileL2;
+		Cube m_WallTileL3;
+
+
+		Cube m_VoidTile;
+		Cube m_TeleportTile;
+		Cube m_PathTile;
 		
 		bool m_AllmapsLoaded{ false };
 	

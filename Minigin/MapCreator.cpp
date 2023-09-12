@@ -18,6 +18,8 @@ namespace dae
     MapCreator::MapCreator(std::shared_ptr<GameObject> pOwner)
         : m_pOwner(pOwner)
     {
+        
+       
         CreateMap("../Data/Layout/LevelLayout0.json", 0);
         m_Cubes.clear();
         CreateMap("../Data/Layout/LevelLayout1.json", 1);
@@ -88,33 +90,64 @@ namespace dae
             {
             case 0:
                 if (colorIndicator == 0)
-                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/greenWall.png");
-                else if (colorIndicator == 1)
-                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/yellowWall.png");
-                else
-                    cube.texture = ResourceManager::GetInstance().LoadTexture("Level/orangeWall.png");
+                {
+                    if (!m_WallTileL1.texture)
+                        m_WallTileL1.texture = ResourceManager::GetInstance().LoadTexture("Level/greenWall.png");
 
+                    cube.texture = m_WallTileL1.texture;
+
+                }
+                else if (colorIndicator == 1)
+                {
+                    if (!m_WallTileL2.texture)
+                        m_WallTileL2.texture = ResourceManager::GetInstance().LoadTexture("Level/yellowWall.png");
+
+                    cube.texture = m_WallTileL2.texture;
+                }
+                else
+                {
+                    if (!m_WallTileL3.texture)
+                        m_WallTileL3.texture = ResourceManager::GetInstance().LoadTexture("Level/orangeWall.png");
+
+                    cube.texture = m_WallTileL3.texture;
+                }
 
                 cube.cubeType = dae::MapTerrain::wall;
+
                 break;
 
             case 1:
-                cube.texture = ResourceManager::GetInstance().LoadTexture("Level/void.png");
+
+                if(!m_VoidTile.texture)
+                    m_VoidTile.texture = ResourceManager::GetInstance().LoadTexture("Level/void.png");
+
+                cube.texture = m_VoidTile.texture;
                 cube.cubeType = dae::MapTerrain::voidTile;
                 break;
 
             case 2:
-                cube.texture = ResourceManager::GetInstance().LoadTexture("Level/path.png");
+
+                if(!m_PathTile.texture)
+                    m_PathTile.texture = ResourceManager::GetInstance().LoadTexture("Level/path.png");
+
+                cube.texture = m_PathTile.texture;
                 cube.cubeType = dae::MapTerrain::path;
                 break;
 
             case 3:
-                cube.texture = ResourceManager::GetInstance().LoadTexture("Level/teleport.png");
+
+                if(!m_TeleportTile.texture)
+                    m_TeleportTile.texture = ResourceManager::GetInstance().LoadTexture("Level/teleport.png");
+
+                cube.texture = m_TeleportTile.texture;
                 cube.cubeType = dae::MapTerrain::teleport;
                 break;
-
+                 
             case 4:
-                cube.texture = ResourceManager::GetInstance().LoadTexture("Level/path.png");
+                if (!m_PathTile.texture)
+                    m_PathTile.texture = ResourceManager::GetInstance().LoadTexture("Level/path.png");
+
+                cube.texture = m_PathTile.texture;
                 cube.cubeType = dae::MapTerrain::path;
                 break;
             }
